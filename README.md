@@ -1,5 +1,6 @@
+# EX 4
 # IMAGE-TRANSFORMATIONS
-
+# DATE
 
 ## Aim
 To perform image transformation such as Translation, Scaling, Shearing, Reflection, Rotation and Cropping using OpenCV and Python.
@@ -34,7 +35,8 @@ Display the transformed images using Matplotlib for visualization. Convert the B
 Save or display the final transformed images for analysis and use plt.show() to display them inline in Jupyter or compatible environments.
 
 ## Program:
-
+## NAME NARESH V
+## REG.NO 212222110027
 ```python
 
 import cv2
@@ -50,7 +52,7 @@ def display_image(image, title):
     plt.show()
 
 # Load an image
-image = cv2.imread('Ducati-Panigale-V4R-MY23-overview-carousel-imgtxt-02-677x740.jpg')
+image = cv2.imread('tree.jpg')
 display_image(image, 'Original Image')
 
 
@@ -112,17 +114,12 @@ display_image(cropped_image, 'Cropped Image')
 
 ## Output:
 
-![image](https://github.com/user-attachments/assets/66e568ce-c799-407a-ae51-c47a8978a4fe)
+![image](https://github.com/user-attachments/assets/9210fdae-24c5-471c-9eb4-f72e1c82864f)
 
-![image](https://github.com/user-attachments/assets/afdfae6d-9f5e-480c-9c65-4bc2f897cc73)
-![image](https://github.com/user-attachments/assets/c924449c-c609-4c7a-8392-b88dc9ca0fc1)
-![image](https://github.com/user-attachments/assets/d6e81193-0d14-4a06-a331-34edb18cd2f5)
-![image](https://github.com/user-attachments/assets/b582b38c-5fe2-4f48-bcdb-6d1393b7acf0)
-![image](https://github.com/user-attachments/assets/d3734504-9c67-4906-b66d-bb93fb170570)
-![image](https://github.com/user-attachments/assets/bfbfc4fa-4aa3-4ed9-ad37-da08498ca185)
 
 
 
 ## Result: 
 
 Thus the different image transformations such as Translation, Scaling, Shearing, Reflection, Rotation and Cropping are done using OpenCV and python programming.
+
