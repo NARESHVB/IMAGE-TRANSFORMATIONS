@@ -1,6 +1,6 @@
-# EX 4
 # IMAGE-TRANSFORMATIONS
-# DATE
+### EXP : 4
+### DATE : 16 / 9 /24
 
 ## Aim
 To perform image transformation such as Translation, Scaling, Shearing, Reflection, Rotation and Cropping using OpenCV and Python.
@@ -10,116 +10,110 @@ Anaconda - Python 3.7
 
 ## Algorithm:
 ### Step1:
-
-Import necessary libraries such as OpenCV, NumPy, and Matplotlib for image processing and visualization.
+Use OpenCV's cv2.imread() to load the image from a file.
 
 ### Step2:
-
-Read the input image using cv2.imread() and store it in a variable for further processing.
-
+Create a translation matrix using NumPy and apply it using cv2.warpAffine().
 
 ### Step3:
-
-Apply various transformations like translation, scaling, shearing, reflection, rotation, and cropping by defining corresponding functions:
-
-1.Translation moves the image along the x or y-axis.
-2.Scaling resizes the image by scaling factors.
-3.Shearing distorts the image along one axis.
-4.Reflection flips the image horizontally or vertically.
-5.Rotation rotates the image by a given angle.
+Use cv2.resize() to scale the image by the desired scaling factors.
 
 ### Step4:
-Display the transformed images using Matplotlib for visualization. Convert the BGR image to RGB format to ensure proper color representation.
+For rotation and reflection, use cv2.getRotationMatrix2D() and cv2.warpAffine().
+
+For shearing, create a shearing matrix and apply it using cv2.warpAffine().
 
 ### Step5:
-Save or display the final transformed images for analysis and use plt.show() to display them inline in Jupyter or compatible environments.
+Use NumPy array slicing to crop the image by selecting a region of interest.
 
 ## Program:
-## NAME NARESH V
-## REG.NO 212222110027
-```python
 
+#### Developed By: NARESH V
+#### Register Number: 212222110027 
+```python
+i)Image Translation
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Function to display image using Matplotlib
-def display_image(image, title):
-    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB for proper color display
-    plt.imshow(image_rgb)
-    plt.title(title)
-    plt.axis('off')
-    plt.show()
+# Load the image
+image = cv2.imread('image.jpg')
 
-# Load an image
-image = cv2.imread('tree.jpg')
-display_image(image, 'Original Image')
+# Define translation matrix: (shift along x, shift along y)
+tx, ty = 100, 50
+translation_matrix = np.float32([[1, 0, tx], [0, 1, ty]])
 
+# Apply translation
+translated_image = cv2.warpAffine(image, translation_matrix, (image.shape[1], image.shape[0]))
 
-# i) Image Translation
-def translate(img, x, y):
-    M = np.float32([[1, 0, x], [0, 1, y]])
-    translated = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
-    return translated
+# Display
+cv2.imshow('Translated Image', translated_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-translated_image = translate(image, 100, 50)
-display_image(translated_image, 'Translated Image')
+ii) Image Scaling
+# Scaling factors
+scale_x, scale_y = 1.5, 1.5
 
-# ii) Image Scaling
-def scale(img, scale_x, scale_y):
-    scaled = cv2.resize(img, None, fx=scale_x, fy=scale_y, interpolation=cv2.INTER_LINEAR)
-    return scaled
+# Resize image
+scaled_image = cv2.resize(image, None, fx=scale_x, fy=scale_y, interpolation=cv2.INTER_LINEAR)
 
-scaled_image = scale(image, 1.5, 1.5)
-display_image(scaled_image, 'Scaled Image')
+# Display
+cv2.imshow('Scaled Image', scaled_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-# iii) Image Shearing
-def shear(img, shear_factor):
-    rows, cols, _ = img.shape
-    M = np.float32([[1, shear_factor, 0], [0, 1, 0]])
-    sheared = cv2.warpAffine(img, M, (cols, rows))
-    return sheared
+iii)Image shearing
+# Define shearing matrix
+shear_factor = 0.5
+shearing_matrix = np.float32([[1, shear_factor, 0], [0, 1, 0]])
 
-sheared_image = shear(image, 0.5)
-display_image(sheared_image, 'Sheared Image')
+# Apply shearing
+sheared_image = cv2.warpAffine(image, shearing_matrix, (int(image.shape[1] * 1.5), image.shape[0]))
 
-# iv) Image Reflection
-def reflect(img):
-    reflected = cv2.flip(img, 1)  # 1 for horizontal flip
-    return reflected
+# Display
+cv2.imshow('Sheared Image', sheared_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-reflected_image = reflect(image)
-display_image(reflected_image, 'Reflected Image')
+iv)Image Reflection
+ Reflection_Image= cv2.flip(image, 1)
 
-# v) Image Rotation
-def rotate(img, angle):
-    (h, w) = img.shape[:2]
-    center = (w // 2, h // 2)
-    M = cv2.getRotationMatrix2D(center, angle, 1.0)
-    rotated = cv2.warpAffine(img, M, (w, h))
-    return rotated
+# Display
+cv2.imshow('Reflection Image', Reflection_Image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-rotated_image = rotate(image, 45)
-display_image(rotated_image, 'Rotated Image')
+v)Image Rotation
+# Rotation center, angle and scale
+center = (image.shape[1] // 2, image.shape[0] // 2)
+angle, scale = 45, 1.0
 
-# vi) Image Cropping
-def crop(img, start_row, start_col, end_row, end_col):
-    cropped = img[start_row:end_row, start_col:end_col]
-    return cropped
+# Get rotation matrix
+rotation_matrix = cv2.getRotationMatrix2D(center, angle, scale)
 
-cropped_image = crop(image, 50, 50, 200, 200)
-display_image(cropped_image, 'Cropped Image')
+# Apply rotation
+rotated_image = cv2.warpAffine(image, rotation_matrix, (image.shape[1], image.shape[0]))
+
+# Display
+cv2.imshow('Rotated Image', rotated_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+vi)Image Cropping
+# Define the region of interest (ROI)
+x, y, w, h = 100, 100, 300, 300
+cropped_image = image[y:y+h, x:x+w]
+
+# Display
+cv2.imshow('Cropped Image', cropped_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 ```
-
 ## Output:
-
-![image](https://github.com/user-attachments/assets/9210fdae-24c5-471c-9eb4-f72e1c82864f)
-
-
+![Screenshot 2024-09-26 161850](https://github.com/user-attachments/assets/be0d0a8e-d338-4f6f-83de-f414c2d284f6)
 
 
 ## Result: 
 
-Thus the different image transformations such as Translation, Scaling, Shearing, Reflection, Rotation and Cropping are done using OpenCV and python programming.
-
+Thus the different image transformations such as Translation, Scaling, Shearing, Reflection, Rotation and Cropping are done using OpenCV and python programming
